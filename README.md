@@ -53,7 +53,8 @@ Once you have your Tumblr credentials, you need to add them to the configuration
       end
     end
 
-That should be all you need to get the Plugin working!
+That should be all you need to get the Plugin working! Users can get the Tumblr info
+(hostname / password) at any time by using `.tumblr` in the channel.
 
 ## Contributing
 
