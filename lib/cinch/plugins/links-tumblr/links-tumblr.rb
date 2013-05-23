@@ -17,7 +17,7 @@ module Cinch::Plugins
 
     def initialize(*args)
       super
-      @storage = CinchStorage.new('yaml/tumblr.yaml')
+      @storage = CinchStorage.new(config[:filename] || 'yaml/tumblr.yml')
       @storage.data[:history] ||= Hash.new
       @hostname = config['hostname'] || nil
       @password = config['password'] || nil

@@ -25,8 +25,8 @@ You will need to add the Plugin and config to your list first;
     @bot = Cinch::Bot.new do
       configure do |c|
         c.plugins.plugins = [Cinch::Plugins::LinksTumblr]
-        c.plugins.options[Cinch::Plugins::LinksTumblr] = { 'hostname'         => 'whatever.tumblr.com',
-                                                           'password'         => 'password, if applicable' }
+        c.plugins.options[Cinch::Plugins::LinksTumblr] = { :hostname         => 'whatever.tumblr.com',
+                                                           :password         => 'password, if applicable' }
       end
     end
 
@@ -44,17 +44,21 @@ Once you have your Tumblr credentials, you need to add them to the configuration
     @bot = Cinch::Bot.new do
       configure do |c|
         c.plugins.plugins = [Cinch::Plugins::LinksTumblr]
-        c.plugins.options[Cinch::Plugins::LinksTumblr] = { 'hostname'         => 'whatever.tumblr.com',
-                                                           'password'         => 'password, if applicable',
-                                                           'consumer_key'     => CONSUMER_KEY,
-                                                           'consumer_secret'  => CONSUMER_SECRET,
-                                                           'token'            => TOKEN,
-                                                           'token_secret'     => TOKEN_SECRET }
+        c.plugins.options[Cinch::Plugins::LinksTumblr] = { :hostname         => 'whatever.tumblr.com',
+                                                           :password         => 'password, if applicable',
+                                                           :consumer_key     => CONSUMER_KEY,
+                                                           :consumer_secret  => CONSUMER_SECRET,
+                                                           :token            => TOKEN,
+                                                           :token_secret     => TOKEN_SECRET }
       end
     end
 
 That should be all you need to get the Plugin working! Users can get the Tumblr info
 (hostname / password) at any time by using `.tumblr` in the channel.
+
+By default links tumbled will be logged to `yaml/tumblr.yml`, you can change this by specifying
+a different loation with `c.plugins.options[Cinch::Plugins::LinksTumblr][:filename] = NEW_PATH`.
+
 
 ## Contributing
 
