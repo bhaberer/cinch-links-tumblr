@@ -19,12 +19,12 @@ module Cinch::Plugins
       super
       @storage = CinchStorage.new(config[:filename] || 'yaml/tumblr.yml')
       @storage.data[:history] ||= Hash.new
-      @hostname = config['hostname'] || nil
-      @password = config['password'] || nil
-      @creds = { :consumer_key      => config['consumer_key'],
-                 :consumer_secret   => config['consumer_secret'],
-                 :token             => config['token'],
-                 :token_secret      => config['token_secret'] }
+      @hostname = config[:hostname] 
+      @password = config[:password]
+      @creds = { :consumer_key      => config[:consumer_key],
+                 :consumer_secret   => config[:consumer_secret],
+                 :token             => config[:token],
+                 :token_secret      => config[:token_secret] }
     end
 
     def execute(m)
