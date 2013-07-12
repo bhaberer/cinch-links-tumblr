@@ -1,5 +1,11 @@
 # Cinch::Plugins::LinksTumblr
 
+[![Gem Version](https://badge.fury.io/rb/cinch-links-tumblr.png)](http://badge.fury.io/rb/cinch-links-tumblr)
+[![Dependency Status](https://gemnasium.com/bhaberer/cinch-links-tumblr.png)](https://gemnasium.com/bhaberer/cinch-links-tumblr)
+[![Build Status](https://travis-ci.org/bhaberer/cinch-links-tumblr.png?branch=master)](https://travis-ci.org/bhaberer/cinch-links-tumblr)
+[![Coverage Status](https://coveralls.io/repos/bhaberer/cinch-links-tumblr/badge.png?branch=master)](https://coveralls.io/r/bhaberer/cinch-links-tumblr?branch=master)
+[![Code Climate](https://codeclimate.com/github/bhaberer/cinch-links-tumblr.png)](https://codeclimate.com/github/bhaberer/cinch-links-tumblr)
+
 This plugin takes all links from the channel and posts them to a Tumblr.
 
 You can optionally specify a password if you want to use a private Tumblr.
@@ -54,7 +60,7 @@ Once you have your Tumblr credentials, you need to add them to the configuration
     end
 
 That should be all you need to get the Plugin working! Users can get the Tumblr info
-(hostname / password) at any time by using `.tumblr` in the channel.
+(hostname / password) at any time by using `!tumblr` in the channel.
 
 By default links tumbled will be logged to `yaml/tumblr.yml`, you can change this by specifying
 a different loation with `c.plugins.options[Cinch::Plugins::LinksTumblr][:filename] = NEW_PATH`.

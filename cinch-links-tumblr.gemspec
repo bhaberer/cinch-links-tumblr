@@ -17,9 +17,16 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_dependency('cinch-storage', '>= 0.0.1')
-  gem.add_dependency('cinch-toolbox', '>= 0.0.5')
-  gem.add_dependency('cinch',         '>= 2.0.0')
-  gem.add_dependency('tumblr-rb',     '>= 2.0.0')
-  gem.add_dependency('weary',         '>= 1.1.3')
+  gem.add_development_dependency 'rake'
+  gem.add_development_dependency 'rspec'
+  gem.add_development_dependency 'coveralls'
+  gem.add_development_dependency 'cinch-test'
+  gem.add_development_dependency 'fakeweb'
+  gem.add_development_dependency 'json'
+
+  gem.add_dependency  'cinch-storage', '~> 1.0.1'
+  gem.add_dependency  'cinch-toolbox', '~> 1.0.3'
+  gem.add_dependency  'cinch',         '~> 2.0.5'
+  gem.add_dependency  'tumblr-rb',     '~> 2.1.1'
+  gem.add_dependency  'weary',         '~> 1.1.3'
 end
