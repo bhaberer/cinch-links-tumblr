@@ -21,10 +21,10 @@ module Cinch::Plugins
       @storage.data ||= {}
       @hostname = config[:hostname]
       @password = config[:password]
-      @creds = { :consumer_key      => config[:consumer_key],
-                 :consumer_secret   => config[:consumer_secret],
-                 :token             => config[:token],
-                 :token_secret      => config[:token_secret] }
+      @creds = { consumer_key:    config[:consumer_key],
+                 consumer_secret: config[:consumer_secret],
+                 token:           config[:token],
+                 token_secret:    config[:token_secret] }
       credential_check
     end
 
@@ -35,8 +35,6 @@ module Cinch::Plugins
         msg = "Links are available @ http://#{@hostname}"
         msg << " Password: #{@password}" unless @password.nil?
         m.user.send msg
-      else
-        debug "ERROR: Tumblr hostname has not been specified, see docs for info."
       end
     end
 
@@ -54,16 +52,18 @@ module Cinch::Plugins
         end
         @storage.synced_save(@bot)
       end
-
     end
 
     private
 
     def tumble(url, nick)
       title = Cinch::Toolbox.get_page_title(url)
-      # Redit
+      # Parse out common Redit formats
       if redit = url.match(/^https?:\/\/.*imgur\.com.*\/([A-Za-z0-9]+\.\S{3})/)
         post_image("http://i.imgur.com/#{redit[1]}", title, nick)
+      elsif redit = url.match(/^https?:\/\/.*imgur\.com.*\/([A-Za-z0-9]+)\/?/)
+        # It may not be a jpg, but most browsers will read the meta regardless.
+        post_image("http://i.imgur.com/#{redit[1]}.jpg", title, nick)
       # Images
       elsif url.match(/\.jpg|jpeg|gif|png$/i)
         post_image(url, title, nick)
@@ -77,39 +77,33 @@ module Cinch::Plugins
     end
 
     def post_link(url, title = nil, nick = nil)
-      document = tumblr_header('link', { 'title' => title, 'tags' => nick })
+      document = tumblr_header(:link, { title: title, tags: nick })
       document << url
       tumblr_post(document)
     end
 
-    def post_quote(quote, source, nick = nil)
-      document = tumblr_header('quote', { 'source' => source, 'tags' => [nick, 'twitter'] })
-      document << quote
-      tumblr_post(document)
-    end
-
     def post_image(url, title = nil, nick = nil)
-      document = tumblr_header('text', { 'title' => title, 'tags' => [nick, 'image'] })
+      document = tumblr_header(:text, { title: title, tags: [nick, 'image'] })
       document << "<p><a href='#{url}'><img src='#{url}' style='max-width: 650px;'/></a><br/><a href='#{url}'>#{url}</a></p>"
       tumblr_post(document)
     end
 
     def post_video(url, title, nick = nil)
-      document = tumblr_header('video', { 'caption' => title, 'tags' => [nick, 'video'] })
+      document = tumblr_header(:video, { caption: title, tags: [nick, 'video'] })
       document << url
       tumblr_post(document)
     end
 
-    def tumblr_header(type = 'text', options = {})
-      opts = { 'type' => type, 'hostname' => @hostname }.update(options)
+    def tumblr_header(type = :text, options = {})
+      opts = { type: type, hostname: @hostname }.update(options)
       doc = YAML::dump(opts)
       doc << "---\n"
       return doc
     end
 
     def credential_check
-      @creds.values.each do |c|
-        raise ArguementError if c.nil?
+      if @creds.values.include?(nil)
+        raise ArgumentError, 'Credentials are not set correctly, please see documentation.'
       end
     end
 

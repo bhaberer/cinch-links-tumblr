@@ -21,7 +21,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'coveralls'
   gem.add_development_dependency 'cinch-test'
-  gem.add_development_dependency 'fakeweb'
   gem.add_development_dependency 'json'
 
   gem.add_dependency  'cinch-storage', '~> 1.0.1'
