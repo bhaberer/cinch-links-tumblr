@@ -4,18 +4,19 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'cinch/plugins/links-tumblr/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "cinch-links-tumblr"
+  gem.name          = 'cinch-links-tumblr'
   gem.version       = Cinch::Plugins::LinksTumblr::VERSION
-  gem.authors       = ["Brian Haberer"]
-  gem.email         = ["bhaberer@gmail.com"]
+  gem.authors       = ['Brian Haberer']
+  gem.email         = ['bhaberer@gmail.com']
   gem.description   = %q{Cinch gem that logs every link posted in the channel to a Tumblr}
   gem.summary       = %q{Cinch Tumblr Plugin}
-  gem.homepage      = "https://github.com/bhaberer/cinch-links-tumblr"
+  gem.homepage      = 'https://github.com/bhaberer/cinch-links-tumblr'
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ["lib"]
+  gem.require_paths = ['lib']
 
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
