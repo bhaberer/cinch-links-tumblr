@@ -3,7 +3,7 @@ require 'open-uri'
 require 'tumblr'
 require 'yaml'
 require 'cinch'
-require 'cinch-storage'
+require 'cinch/storage'
 require 'cinch/toolbox'
 
 module Cinch::Plugins
@@ -19,7 +19,7 @@ module Cinch::Plugins
 
     def initialize(*args)
       super
-      @storage = CinchStorage.new(config[:filename] || 'yaml/tumblr.yml')
+      @storage = Cinch::Storage.new(config[:filename] || 'yaml/tumblr.yml')
       @storage.data ||= {}
       @hostname = config[:hostname]
       @password = config[:password]
