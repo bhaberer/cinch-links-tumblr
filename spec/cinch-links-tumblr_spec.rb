@@ -13,54 +13,56 @@ describe Cinch::Plugins::LinksTumblr do
   end
 
   it 'should return the links url and password if one is defined' do
-    get_replies(make_message(@bot, '!tumblr', { channel: '#foo', nick: 'bar' })).
-      first.text.should == "Links are available @ http://marvintesting.tumblr.com Password: password"
+    msg = make_message(@bot, '!tumblr', { channel: '#foo', nick: 'bar' })
+    expect(get_replies(msg).first.text)
+      .to eq('Links are available @ http://marvintesting.tumblr.com Password: password')
   end
 
   it 'should not send url and password if sent via pm' do
-    get_replies(make_message(@bot, '!tumblr')).
-      first.text.should == "You must use that command in the main channel."
+    reply = get_replies(make_message(@bot, '!tumblr')).first
+    expect(reply.text).to eq('You must use that command in the main channel.')
   end
 
   it 'should not return a password if one is not defined' do
-    get_replies(make_message(build_bot, '!tumblr', { channel: '#foo', nick: 'bar' })).
-      first.text.should == "Links are available @ http://marvintesting.tumblr.com"
-  end    
+    msg = make_message(build_bot, '!tumblr', { channel: '#foo', nick: 'bar' })
+    expect(get_replies(msg).first.text)
+      .to eq('Links are available @ http://marvintesting.tumblr.com')
+  end
 
   it 'should capture links' do
     get_replies(make_message(@bot, 'http://github.com', { channel: '#foo', nick: 'bar' }))
     post = get_last_tumblr_post
-    post['url'].should == 'http://github.com'
-    post["type"].should == 'link'
+    expect(post['url']).to eq('http://github.com')
+    expect(post["type"]).to eq('link')
   end
 
   it 'should capture youtube links and post them as videos' do
     get_replies(make_message(@bot, 'https://www.youtube.com/watch?v=-xiAbDkXDgg', { channel: '#foo', nick: 'bar' }))
     post = get_last_tumblr_post
-    post['caption'].should == '<p>Lo Pan Style (Gangnam Style Parody) Official - YouTube</p>'
-    post['tags'].should == ['bar', 'video']
-    post['type'].should == 'video'
+    expect(post['caption']).to eq('<p>Lo Pan Style (Gangnam Style Parody) Official - YouTube</p>')
+    expect(post['tags']).to eq(['bar', 'video'])
+    expect(post['type']).to eq('video')
   end
 
   it 'should capture imgur links' do
     get_replies(make_message(@bot, 'http://imgur.com/oMndYK7', { channel: '#foo', nick: 'bar' }))
     post = get_last_tumblr_post
-    post['title'].should == 'Anybody with a cat will relate. - Imgur'
-    post['type'].should == 'text'
+    expect(post['title']).to eq('Anybody with a cat will relate. - Imgur')
+    expect(post['type']).to eq('text')
   end
 
   it 'should capture imgur links and tumble them with title' do
     get_replies(make_message(@bot, 'http://i.imgur.com/NWq5WIq.gif', { channel: '#foo', nick: 'bar' }))
     post = get_last_tumblr_post
-    post['title'].should == '"ball, ball, ball, BALL!!" - Corgi - Imgur'
-    post['type'].should == 'text'
+    expect(post['title']).to eq('"ball, ball, ball, BALL!!" - Corgi - Imgur')
+    expect(post['type']).to eq('text')
   end
 
   it 'should capture image links' do
     get_replies(make_message(@bot, 'http://tmp.weirdo513.org/choc.jpg', { channel: '#foo', nick: 'bar' }))
     post = get_last_tumblr_post
-    post['title'].should == 'Image from http://tmp.weirdo513.org'
-    post['type'].should == 'text'
+    expect(post['title']).to eq('Image from http://tmp.weirdo513.org')
+    expect(post['type']).to eq('text')
   end
 end
 
@@ -106,6 +108,6 @@ def build_bot(password = nil)
             token:           ENV['TOKEN'],
             token_secret:    ENV['TOKEN_SECRET'] }
   conf[:password] = password unless password.nil?
-  
+
   make_bot(Cinch::Plugins::LinksTumblr, conf)
 end
